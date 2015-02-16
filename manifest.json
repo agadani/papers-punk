@@ -1,0 +1,10 @@
+{
+    "name": "Papers, punk",
+    "description": "Randomly chooses a file from a specified directory and displays it. ",
+    "version": "0.0.0.1",
+    "manifest_version": 2,
+    "permissions": ["file:///*"],
+    "chrome_url_overrides" : {
+        "newtab": "newtab.html"
+    }
+ }
