@@ -4,11 +4,22 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-var PAPER_DIR = "/Users/avani/Desktop/To_Read";
 
-function run() {
+function init() {
+  chrome.storage.sync.get({ papersDir: '' }, function(items) {
+      if(items.papersDir != '') { 
+         pickAFile(items.papersDir);
+      } else {
+        // Complain that the directory isn't set yet
+        document.getElementById('error-not-set').style['display'] = '';
+        document.getElementById('optionslink').href =
+          chrome.extension.getURL("options.html");
+      }
+    });
+}
 
-  d = new DirectoryList(PAPER_DIR);
+function pickAFile(papersDir) {
+  d = new DirectoryList(papersDir);
   d.getFileList(function(request) {
      var files = request;
      if (!files || files.length == 0) { return; }
@@ -23,5 +34,5 @@ function run() {
 }
 
 if (window.location.href.match(/chrome-extension:.*newtab.html/)) {
-  document.addEventListener("DOMContentLoaded", run);
+  document.addEventListener("DOMContentLoaded", init);
 }
